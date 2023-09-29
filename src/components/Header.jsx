@@ -11,9 +11,9 @@ const Header = () => {
       </div>
       <div className="text-2xl text-primary">PomotimeBloom</div>
       <div>
-        <button>
-          <FaGithub className="text-primary hover:text-secondary" size={50} href="" />
-        </button>
+        <a href="https://github.com/saymoreg/pomotimebloom-react">
+          <FaGithub className="text-primary hover:text-secondary" size={50} />
+        </a>
       </div>
     </div>
   );

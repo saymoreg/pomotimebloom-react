@@ -4,11 +4,9 @@ import PomodoroTimer from "./components/PomodoroTimer";
 
 function App() {
   return (
-    <div className="flex flex-col h-screen px-10 py-2">
+    <div className="flex flex-col justify-center px-10 py-2 w-full h-screen">
       <Header />
-      <main className="flex-grow bg-secondary rounded-md">
-        <PomodoroTimer />
-      </main>
+      <PomodoroTimer />
       <Footer />
     </div>
   );
