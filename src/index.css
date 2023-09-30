@@ -6,3 +6,9 @@
   margin: 0;
   padding: 0;
 }
+
+/* @layer components {
+  .btn-primary {
+    @apply text-tertiary border p-1 px-5 rounded-md hover:text-primary hover:bg-tertiary;
+  }
+} */
