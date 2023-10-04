@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import TimerDisplay from "./TimerDisplay";
 import ControlButtons from "./ControlButtons";
 import ConfigModal from "./ConfigModal";
+import TabTitleTimer from "./TabTitleTimer";
 
 const PomodoroTimer = () => {
   const initialTimerMinutes = 25;
@@ -115,6 +116,8 @@ const PomodoroTimer = () => {
 
   return (
     <div className="flex flex-col justify-center items-center flex-grow bg-secondary px-96 rounded-md">
+      {/* enabling tab title timer */}
+      <TabTitleTimer setTimer={setTimer} />
       {/* screen where timer will be shown */}
       <TimerDisplay
         isShortBreak={isShortBreak}
