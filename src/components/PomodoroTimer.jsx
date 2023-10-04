@@ -23,12 +23,15 @@ const PomodoroTimer = () => {
   const [isShortBreak, setIsShortBreak] = useState(false);
   const [isLongBreak, setIsLongBreak] = useState(false);
 
+  const [remainingTime, setRemainingTime] = useState(initialTimerMinutes * 60);
+
   useEffect(() => {
     let interval;
 
     if (isActive && timer > 0) {
       interval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
+        setRemainingTime((prevTimer) => prevTimer - 1);
       }, 1000);
     } else if (timer === 0) {
       setIsActive(false);
@@ -37,9 +40,11 @@ const PomodoroTimer = () => {
     if (isShortBreak) {
       setTimer(newShortBreakValue);
       setIsShortBreak(false);
+      setRemainingTime(newShortBreakValue);
     } else if (isLongBreak) {
       setTimer(newLongBreakValue);
       setIsLongBreak(false);
+      setRemainingTime(newLongBreakValue);
     }
 
     return () => clearInterval(interval);
@@ -115,9 +120,9 @@ const PomodoroTimer = () => {
     "text-tertiary border p-1 px-5 mx-5 rounded-md hover:text-primary hover:bg-tertiary";
 
   return (
-    <div className="flex flex-col justify-center items-center flex-grow bg-secondary px-96 rounded-md">
+    <div className="md:flex md:flex-col md:justify-center md:items-center flex-grow bg-secondary px-4 md:px-12 rounded-md">
       {/* enabling tab title timer */}
-      <TabTitleTimer setTimer={setTimer} />
+      <TabTitleTimer remainingTime={remainingTime} />
       {/* screen where timer will be shown */}
       <TimerDisplay
         isShortBreak={isShortBreak}
