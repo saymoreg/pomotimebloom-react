@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import TimerDisplay from "./TimerDisplay";
+import ControlButtons from "./ControlButtons";
+import ConfigModal from "./ConfigModal";
 
 const PomodoroTimer = () => {
   const initialTimerMinutes = 25;
@@ -65,14 +68,6 @@ const PomodoroTimer = () => {
     setIsLongBreak(false);
   };
 
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    const formattedMinutes = minutes.toString().padStart(2, "0");
-    const formattedSeconds = remainingSeconds.toString().padStart(2, "0");
-    return `${formattedMinutes}:${formattedSeconds}`;
-  };
-
   const openConfigModal = () => {
     setShowConfigModal(true);
   };
@@ -115,113 +110,45 @@ const PomodoroTimer = () => {
     setIsActive(true);
   };
 
+  const buttonStyle =
+    "text-tertiary border p-1 px-5 mx-5 rounded-md hover:text-primary hover:bg-tertiary";
+
   return (
     <div className="flex flex-col justify-center items-center flex-grow bg-secondary px-96 rounded-md">
       {/* screen where timer will be shown */}
-      <div className="text-tertiary text-7xl">
-        {isShortBreak
-          ? formatTime(newShortBreakValue)
-          : isLongBreak
-          ? formatTime(newLongBreakValue)
-          : formatTime(timer)}
-      </div>
+      <TimerDisplay
+        isShortBreak={isShortBreak}
+        isLongBreak={isLongBreak}
+        timer={timer}
+        newShortBreakValue={newShortBreakValue}
+        newLongBreakValue={newLongBreakValue}
+      />
       {/* buttons of control start/stop/short_break/long_break */}
-      <div className="py-4 text-lg">
-        {!isActive ? (
-          <>
-            <button
-              className="text-tertiary border p-1 px-5 mx-5 rounded-md hover:text-primary hover:bg-tertiary"
-              onClick={startTimer}
-            >
-              START
-            </button>
-            <button
-              className="text-tertiary border p-1 px-5 mx-5 rounded-md hover:text-primary hover:bg-tertiary"
-              onClick={startShortBreak}
-            >
-              SHORT BREAK
-            </button>
-            <button
-              className="text-tertiary border p-1 px-5 mx-5 rounded-md hover:text-primary hover:bg-tertiary"
-              onClick={startLongBreak}
-            >
-              LONG BREAK
-            </button>
-          </>
-        ) : (
-          <button
-            className="text-tertiary border p-1 px-5 mx-5 rounded-md hover:text-primary hover:bg-tertiary"
-            onClick={stopTimer}
-          >
-            STOP
-          </button>
-        )}
-        <button
-          className="text-tertiary border p-1 px-5 mx-5 rounded-md hover:text-primary hover:bg-tertiary"
-          onClick={resetTimer}
-        >
-          RESET
-        </button>
-      </div>
+      <ControlButtons
+        isActive={isActive}
+        startTimer={startTimer}
+        stopTimer={stopTimer}
+        resetTimer={resetTimer}
+        startShortBreak={startShortBreak}
+        startLongBreak={startLongBreak}
+      />
       {/* settings button where you may customize your timer */}
       <div>
-        <button
-          className="text-tertiary border p-1 px-5 mx-5 rounded-md hover:text-primary hover:bg-tertiary"
-          onClick={openConfigModal}
-        >
+        <button className={buttonStyle} onClick={openConfigModal}>
           CONFIGURATION
         </button>
-        {showConfigModal && (
-          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-800">
-            <div className="bg-white p-4 rounded-lg">
-              <h2 className="text-primary text-2xl mb-4">
-                Timer Configuration
-              </h2>
-              <label className="block mb-2 text-primary">
-                Enter Timer Value (minutes):
-              </label>
-              <input
-                type="number"
-                value={newTimerValue / 60}
-                onChange={handleTimerInputChange}
-                className="border p-2 rounded-md w-full"
-              />
-              <label className="block mb-2 text-primary">
-                Short Break Timer Value (minutes):
-              </label>
-              <input
-                type="number"
-                value={newShortBreakValue / 60}
-                onChange={handleShortBreakInputChange}
-                className="border p-2 rounded-md w-full"
-              />
-              <label className="block mb-2 text-primary">
-                Long Break Timer Value (minutes):
-              </label>
-              <input
-                type="number"
-                value={newLongBreakValue / 60}
-                onChange={handleLongBreakInputChange}
-                className="border p-2 rounded-md w-full"
-              />
-              <button
-                className="mt-4 text-tertiary border p-2 px-4 rounded-md bg-primary hover:bg-tertiary hover:text-primary"
-                onClick={updateTimer}
-              >
-                Update Timer
-              </button>
-              <button
-                className="mt-4 text-tertiary border p-2 px-4 rounded-md bg-primary hover:bg-tertiary hover:text-primary"
-                onClick={closeConfigModal}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
+        <ConfigModal
+          showConfigModal={showConfigModal}
+          closeConfigModal={closeConfigModal}
+          newTimerValue={newTimerValue}
+          newShortBreakValue={newShortBreakValue}
+          newLongBreakValue={newLongBreakValue}
+          handleTimerInputChange={handleTimerInputChange}
+          handleShortBreakInputChange={handleShortBreakInputChange}
+          handleLongBreakInputChange={handleLongBreakInputChange}
+          updateTimer={updateTimer}
+        />
       </div>
-      {/* todo list task where you may add/delete/modify and put a checkmark on task */}
-      <div>todo list</div>
     </div>
   );
 };
