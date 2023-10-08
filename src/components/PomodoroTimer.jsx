@@ -3,6 +3,7 @@ import TimerDisplay from "./TimerDisplay";
 import ControlButtons from "./ControlButtons";
 import ConfigModal from "./ConfigModal";
 import TabTitleTimer from "./TabTitleTimer";
+import TodoList from "./TodoList";
 
 const PomodoroTimer = () => {
   const initialTimerMinutes = 25;
@@ -157,6 +158,7 @@ const PomodoroTimer = () => {
           updateTimer={updateTimer}
         />
       </div>
+      <TodoList />
     </div>
   );
 };
